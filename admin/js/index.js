@@ -19,11 +19,11 @@ function renderBranches(branches){
     
 }
 
-function createBranchComponent(branch){
+function createBranchComponent(branch){ 
     const {id, name, address} = branch;
     const a = document.createElement("a");
     a.classList.add("list-group-item");
-    a.href = "#";
+    a.href = `branchDetails.html?branchId=${id}`;
     const div = document.createElement("div");
     const h3 = document.createElement("h3");
     h3.innerText = name;
