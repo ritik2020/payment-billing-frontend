@@ -10,6 +10,30 @@ async function getAllBranches(){
     }
 }
 
+function renderBranches(branches){
+    const branchesContainer = document.getElementById("branches");
+    branches.forEach(branch=>{
+        const component = createBranchComponent(branch);
+        branchesContainer.appendChild(component);
+    })
+    
+}
+
+function createBranchComponent(branch){
+    const {id, name, address} = branch;
+    const a = document.createElement("a");
+    a.classList.add("list-group-item");
+    a.href = "#";
+    const div = document.createElement("div");
+    const h3 = document.createElement("h3");
+    h3.innerText = name;
+    const p = document.createElement("p");
+    p.innerText = address;
+    div.appendChild(h3);
+    div.appendChild(p);
+    a.appendChild(div);
+    return a;
+}
 
 
 
@@ -29,7 +53,7 @@ async function handleFetchAPIResponse(res){
 
 async function main(){
     const res = await getAllBranches();
-    console.log(res);
+    renderBranches(res);
 }
 
 main();
