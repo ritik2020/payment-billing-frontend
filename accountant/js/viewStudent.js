@@ -96,9 +96,12 @@ async function main(){
     renderPersonalDetails(student, course);
     renderPaymentDetails(student.paymentDetails);
     document.getElementById("fee-due").innerText = feeDue;
+    document.getElementById("edit-student-btn").addEventListener("click", ()=>{
+        location.replace(`editStudent.html?rollNo=${rollNo}`);
+    });
     document.getElementById("add-payment-btn").addEventListener("click", ()=>{
         location.replace(`addPaymentDetail.html?rollNo=${rollNo}`);
-    })
-}
+    });
+} 
 
 main();

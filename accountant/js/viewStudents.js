@@ -36,8 +36,6 @@ async function getStudentsOfBranch(branchId){
     }
 }
 
-
-
 function renderStudents(students){
     const container = document.getElementById("students-container");
     students.forEach(student=>{
