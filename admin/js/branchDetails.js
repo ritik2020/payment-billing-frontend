@@ -24,6 +24,7 @@ function renderView(data){
     document.getElementById("branchAddress").innerText = address;
     document.getElementById("add-accountant-btn").href = `addAccountant.html?branchId=${id}`;
     document.getElementById("edit-branch-btn").href = `editBranch.html?branchId=${id}`;
+    document.getElementById("view-students-btn").href = `viewStudents.html?branchId=${id}`;
     renderAccountants(accountants);
 }
 
