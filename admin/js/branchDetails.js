@@ -3,15 +3,20 @@ const baseURL = "http://localhost:3000";
 
 async function getBranchById(branchId){
     try{
-        const res = await fetch(`${baseURL}/branch/${branchId}`);
+        const res = await fetch(`${baseURL}/branch/${branchId}`,{
+            headers: {
+                token: localStorage.getItem("admin_token")
+            }
+        });
         if(res.status===200){
             return res.json();
         }
         else if(res.status===401){
-            
+            alert("Unauthorized");
+            location.replace("../../login.html");
         }
         else{
-    
+            alert("something went wrong");
         }
     } catch(err){
         console.log(err);
@@ -67,14 +72,23 @@ function createAccountantComponent(accountant){
 async function deleteAccountant(id){
     const isConfirm = confirm("Are you sure?")
     if(isConfirm){
-        const res = await fetch(`${baseURL}/accountant/${id}`, {method: 'DELETE', mode: 'cors'});
+        const res = await fetch(`${baseURL}/accountant/${id}`, {
+            method: 'DELETE', 
+            mode: 'cors',
+            headers: {
+                token: localStorage.getItem("admin_token")
+            }
+        
+        });
         if(res.status===200){
             alert("Deleted Successfully");
             location.reload();
-        } else if(res.status === 401){
-
-        } else {
-
+        }  else if(res.status===401){
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
+            alert("something went wrong");
         }
     }
 }

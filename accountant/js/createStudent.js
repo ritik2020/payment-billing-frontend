@@ -8,7 +8,7 @@ async function createStudent(){
         phone: document.getElementById("phone").value,
     }
 
-    const branch = await getBranch(24);
+    const branch = await getBranch(localStorage.getItem("acc_id"));
     const courseId = document.getElementById("courseId").value;
 
     await hitCreateStudentRequest(student, branch.id, courseId)
@@ -19,7 +19,8 @@ async function hitCreateStudentRequest(student, branchId, courseId){
         method: 'POST',
         mode: 'cors',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            token: localStorage.getItem("acc_token")
         },
         body: JSON.stringify(student)
     });
@@ -27,20 +28,32 @@ async function hitCreateStudentRequest(student, branchId, courseId){
         alert("Added successfully");
         window.location.replace(`viewStudents.html`);
     }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
+    }
 }
 
 async function getBranch(accId){
     try{
-        const res = await fetch(`${baseURL}/accountant/branch/${accId}`);
+        const res = await fetch(`${baseURL}/accountant/branch/${accId}`,{
+            headers: {
+                token: localStorage.getItem("acc_token")
+            }
+        });
         if(res.status===200){
             const branch = res.json();
             return branch;
         }
         else if(res.status===401){
-            
+            alert("Unauthorized");
+            location.replace("../../login.html");
         }
         else{
-    
+            alert("something went wrong");
         }
     } catch(err){
         console.log(err);
@@ -49,10 +62,21 @@ async function getBranch(accId){
 
 
 async function getCourses(){
-    const res = await fetch(`${baseURL}/course/`);
+    const res = await fetch(`${baseURL}/course/`, {
+        headers: {
+            token: localStorage.getItem("acc_token")
+        }
+    });
     if(res.status===200){
         const courses = await res.json();
         return courses;
+    }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
     }
 }
 

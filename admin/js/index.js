@@ -2,7 +2,11 @@ const baseURL = "http://localhost:3000";
 
 async function getAllBranches(){
     try{
-        const res = await fetch(`${baseURL}/branch/`);
+        const res = await fetch(`${baseURL}/branch/`,{
+            headers: {
+                token: localStorage.getItem("admin_token")
+            }
+        });
         const data = await handleFetchAPIResponse(res);
         return data;
     } catch(err){
@@ -40,7 +44,8 @@ function createBranchComponent(branch){
 
 async function handleFetchAPIResponse(res){
     if(res.status===401){
-        //refirect to login page
+        alert("You are not authorized to access this resource. Please login again");
+        location.replace("../../login.html");
     } else if(res.status!=200){
         console.log(res);
         throw new Error("Something went wrong");

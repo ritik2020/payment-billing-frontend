@@ -1,26 +1,59 @@
 const baseURL = "http://localhost:3000";
 
 async function getStudentByRollNo(rollNo){
-    const res = await fetch(`${baseURL}/student/${rollNo}`);
+    const res = await fetch(`${baseURL}/student/${rollNo}`, {
+        headers: {
+            token: localStorage.getItem("acc_token")
+        }
+    });
     if(res.status===200){
         const student = await res.json();
         return student;
     }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
+    }
 }
 
 async function getEnrolledCourse(rollNo){
-    const res = await fetch(`${baseURL}/student/course/${rollNo}`);
+    const res = await fetch(`${baseURL}/student/course/${rollNo}`, {
+        headers: {
+            token: localStorage.getItem("acc_token")
+        }
+    });
     if(res.status===200){
         const course = await res.json();
         return course;
     }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
+    }
 }
 
 async function getFeeDue(rollNo){
-    const res = await fetch(`${baseURL}/student/fee/${rollNo}`);
+    const res = await fetch(`${baseURL}/student/fee/${rollNo}`, {
+        headers: {
+            token: localStorage.getItem("acc_token")
+        }
+    });
     if(res.status===200){
         const fee = await res.json();
         return fee;
+    }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
     }   
 }
 
@@ -75,10 +108,23 @@ function createPaymentDetailComponent(paymentDetail){
 
 async function deletePaymentDetail(id){
     try{
-        const res = await fetch(`${baseURL}/paymentdetail/${id}`, {method: 'DELETE'});
+        const res = await fetch(`${baseURL}/paymentdetail/${id}`, {
+            method: 'DELETE',
+            headers: {
+                token: localStorage.getItem("acc_token")
+            }
+        
+        });
         if(res.status===200){
             alert("Deleted Successfully");
             location.reload();
+        }
+        else if(res.status===401){
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
+            alert("something went wrong");
         }
     }
     catch(err){

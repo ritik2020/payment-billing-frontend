@@ -1,10 +1,21 @@
 const baseURL = "http://localhost:3000";
 
 async function getBranchById(id){
-    const res = await fetch(`${baseURL}/branch/${id}`);
+    const res = await fetch(`${baseURL}/branch/${id}`, {
+        headers: {
+            token: localStorage.getItem("admin_token")
+        }
+    });
     if(res.status===200){
         const branch = await res.json();
         return branch;
+    }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
     }
 }
 
@@ -24,7 +35,8 @@ async function hitEditBranchRequest(branch, id){
             method: 'PUT',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: localStorage.getItem("admin_token")
             },
             body: JSON.stringify(branch)
         });
@@ -33,8 +45,10 @@ async function hitEditBranchRequest(branch, id){
             location.replace(`./branchDetails.html?branchId=${id}`);
         }
         else if(res.status===401){
-            alert("unauthorized");
-        }else{
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
             alert("something went wrong");
         }
     } catch(err){

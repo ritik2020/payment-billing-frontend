@@ -2,10 +2,21 @@ const baseURL = "http://localhost:3000";
 
 
 async function getAccountantById(id){
-    const res = await fetch(`${baseURL}/accountant/${id}`);
+    const res = await fetch(`${baseURL}/accountant/${id}`, {
+        headers: {
+            token: localStorage.getItem("admin_token")
+        }
+    });
     if(res.status===200){
         const accountant = await res.json();
         return accountant;
+    }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
     }
 }
 
@@ -26,7 +37,8 @@ async function hitEditAccountantRequest(accountant){
             method: 'PUT',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: localStorage.getItem("admin_token")
             },
             body: JSON.stringify(accountant)
         });
@@ -34,8 +46,10 @@ async function hitEditAccountantRequest(accountant){
             alert("Accountant updated successfully");
         }
         else if(res.status===401){
-            alert("unauthorized");
-        }else{
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
             alert("something went wrong");
         }
     } catch(err){

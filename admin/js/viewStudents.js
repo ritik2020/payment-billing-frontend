@@ -2,16 +2,21 @@ const baseURL = "http://localhost:3000";
 
 async function getStudentsOfBranch(branchId){
     try{
-        const res = await fetch(`${baseURL}/branch/students/${branchId}`);
+        const res = await fetch(`${baseURL}/branch/students/${branchId}`, {
+            headers: {
+                token: localStorage.getItem("admin_token")
+            }
+        });
         if(res.status===200){
             const students = res.json();
             return students;
         }
         else if(res.status===401){
-            
+            alert("Unauthorized");
+            location.replace("../../login.html");
         }
         else{
-    
+            alert("something went wrong");
         }
     } catch(err){
         console.log(err);

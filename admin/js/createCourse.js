@@ -16,7 +16,8 @@ async function hitCreateCourseRequest(course){
             method: 'POST',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: localStorage.getItem("admin_token")
             },
             body: JSON.stringify(course)
         });
@@ -25,8 +26,10 @@ async function hitCreateCourseRequest(course){
             window.location.replace(`viewCourses.html`);
         }
         else if(res.status===401){
-            alert("unauthorized");
-        }else{
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
             alert("something went wrong");
         }
     } catch(err){

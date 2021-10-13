@@ -2,10 +2,21 @@ const baseURL = "http://localhost:3000"
 
 async function getPaymentDetails(id){
     try{
-        const res = await fetch(`${baseURL}/paymentdetail/${id}`);
+        const res = await fetch(`${baseURL}/paymentdetail/${id}`,{
+            headers: {
+                token: localStorage.getItem("acc_token")
+            }
+        });
         if(res.status===200){
             const detail = await res.json();
             return detail;
+        }
+        else if(res.status===401){
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
+            alert("something went wrong");
         }
     }catch(err){
         console.log(err);
@@ -28,7 +39,8 @@ async function hitEditPaymentDetailRequest(paymentDetail){
             method: 'PUT',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: localStorage.getItem("acc_token")
             },
             body: JSON.stringify(paymentDetail)
         });
@@ -36,8 +48,10 @@ async function hitEditPaymentDetailRequest(paymentDetail){
             alert("Updated successfully");
         }
         else if(res.status===401){
-            alert("unauthorized");
-        }else{
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
             alert("something went wrong");
         }
     } catch(err){

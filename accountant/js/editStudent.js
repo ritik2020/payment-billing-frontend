@@ -1,10 +1,21 @@
 const baseURL = "http://localhost:3000";
 
 async function getStudentByRollNo(rollNo){
-    const res = await fetch(`${baseURL}/student/${rollNo}`);
+    const res = await fetch(`${baseURL}/student/${rollNo}`, {
+        headers: {
+            token: localStorage.getItem("acc_token")
+        }
+    });
     if(res.status===200){
         const student = await res.json();
         return student;
+    }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
     }
 }
 
@@ -25,7 +36,8 @@ async function hitEditStudentRequest(student){
             method: 'PUT',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: localStorage.getItem("acc_token")
             },
             body: JSON.stringify(student)
         });
@@ -34,8 +46,10 @@ async function hitEditStudentRequest(student){
             location.replace("viewStudents.html");
         }
         else if(res.status===401){
-            alert("unauthorized");
-        }else{
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
             alert("something went wrong");
         }
     } catch(err){

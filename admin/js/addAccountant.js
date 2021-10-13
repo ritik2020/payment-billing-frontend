@@ -20,7 +20,8 @@ async function hitAddAccountantRequest(accountant, branchId){
             method: 'POST',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: localStorage.getItem("admin_token")
             },
             body: JSON.stringify(accountant)
         });
@@ -30,6 +31,7 @@ async function hitAddAccountantRequest(accountant, branchId){
         }
         else if(res.status===401){
             alert("unauthorized");
+            location.replace("../../login.html")
         }else{
             alert("something went wrong");
         }

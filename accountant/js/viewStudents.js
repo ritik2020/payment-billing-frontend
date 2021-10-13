@@ -2,16 +2,21 @@ const baseURL = "http://localhost:3000";
 
 async function getBranch(accId){
     try{
-        const res = await fetch(`${baseURL}/accountant/branch/${accId}`);
+        const res = await fetch(`${baseURL}/accountant/branch/${accId}`, {
+            headers: {
+                token: localStorage.getItem("acc_token")
+            }
+        });
         if(res.status===200){
             const branch = res.json();
             return branch;
         }
         else if(res.status===401){
-            
+            alert("Unauthorized");
+            location.replace("../../login.html");
         }
         else{
-    
+            alert("something went wrong");
         }
     } catch(err){
         console.log(err);
@@ -20,16 +25,21 @@ async function getBranch(accId){
 
 async function getStudentsOfBranch(branchId){
     try{
-        const res = await fetch(`${baseURL}/branch/students/${branchId}`);
+        const res = await fetch(`${baseURL}/branch/students/${branchId}`, {
+            headers: {
+                token: localStorage.getItem("acc_token")
+            }
+        });
         if(res.status===200){
             const students = res.json();
             return students;
         }
         else if(res.status===401){
-            
+            alert("Unauthorized");
+            location.replace("../../login.html");
         }
         else{
-    
+            alert("something went wrong");
         }
     } catch(err){
         console.log(err);
@@ -73,7 +83,7 @@ function createStudentComponent(student){
 }
 
 async function main(){
-    const branch = await getBranch(24);
+    const branch = await getBranch(localStorage.getItem("acc_id"));
     document.getElementById("branch-name").innerText = branch.name;
     const students = await getStudentsOfBranch(branch.id);
     renderStudents(students);

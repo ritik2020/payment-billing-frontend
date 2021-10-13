@@ -2,16 +2,21 @@ const baseURL = "http://localhost:3000";
 
 async function getCourses(){
     try{
-        const res = await fetch(`${baseURL}/course/`);
+        const res = await fetch(`${baseURL}/course/`, {
+            headers: {
+                token: localStorage.getItem("admin_token")
+            }
+        });
         if(res.status===200){
             const courses = res.json();
             return courses;
         }
         else if(res.status===401){
-            
+            alert("Unauthorized");
+            location.replace("../../login.html");
         }
         else{
-    
+            alert("something went wrong");
         }
     } catch(err){
         console.log(err);

@@ -11,7 +11,8 @@ async function addPaymentDetails(rollNo) {
             method: 'POST',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: localStorage.getItem("acc_token")
             },
             body: JSON.stringify(details)
         });
@@ -19,9 +20,11 @@ async function addPaymentDetails(rollNo) {
             alert("Added successfully");
             window.location.replace(`viewStudent.html?rollNo=${rollNo}`);
         }
-        else if (res.status === 401) {
-            alert("unauthorized");
-        } else {
+        else if(res.status===401){
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
             alert("something went wrong");
         }
     } catch (err) {

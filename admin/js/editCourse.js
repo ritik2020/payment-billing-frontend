@@ -1,10 +1,21 @@
 const baseURL = "http://localhost:3000";
 
 async function getCourseById(id){
-    const res = await fetch(`${baseURL}/course/${id}`);
+    const res = await fetch(`${baseURL}/course/${id}`,{
+        headers: {
+            token: localStorage.getItem("admin_token")
+        }
+    });
     if(res.status===200){
         const course = await res.json();
         return course;
+    }
+    else if(res.status===401){
+        alert("Unauthorized");
+        location.replace("../../login.html");
+    }
+    else{
+        alert("something went wrong");
     }
 }
 
@@ -25,7 +36,8 @@ async function hitEditCourseRequest(course){
             method: 'PUT',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: localStorage.getItem("admin_token")
             },
             body: JSON.stringify(course)
         });
@@ -33,8 +45,10 @@ async function hitEditCourseRequest(course){
             alert("Course updated successfully");
         }
         else if(res.status===401){
-            alert("unauthorized");
-        }else{
+            alert("Unauthorized");
+            location.replace("../../login.html");
+        }
+        else{
             alert("something went wrong");
         }
     } catch(err){
