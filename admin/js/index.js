@@ -45,7 +45,7 @@ function createBranchComponent(branch){
 async function handleFetchAPIResponse(res){
     if(res.status===401){
         alert("You are not authorized to access this resource. Please login again");
-        location.replace("../../login.html");
+        location.replace("../login.html");
     } else if(res.status!=200){
         console.log(res);
         throw new Error("Something went wrong");

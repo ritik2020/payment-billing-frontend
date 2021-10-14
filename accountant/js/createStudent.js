@@ -30,7 +30,7 @@ async function hitCreateStudentRequest(student, branchId, courseId){
     }
     else if(res.status===401){
         alert("Unauthorized");
-        location.replace("../../login.html");
+        location.replace("../login.html");
     }
     else{
         alert("something went wrong");
@@ -50,7 +50,7 @@ async function getBranch(accId){
         }
         else if(res.status===401){
             alert("Unauthorized");
-            location.replace("../../login.html");
+            location.replace("../login.html");
         }
         else{
             alert("something went wrong");
@@ -73,7 +73,7 @@ async function getCourses(){
     }
     else if(res.status===401){
         alert("Unauthorized");
-        location.replace("../../login.html");
+        location.replace("../login.html");
     }
     else{
         alert("something went wrong");

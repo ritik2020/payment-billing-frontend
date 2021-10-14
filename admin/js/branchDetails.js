@@ -13,7 +13,7 @@ async function getBranchById(branchId){
         }
         else if(res.status===401){
             alert("Unauthorized");
-            location.replace("../../login.html");
+            location.replace("../login.html");
         }
         else{
             alert("something went wrong");
@@ -85,7 +85,7 @@ async function deleteAccountant(id){
             location.reload();
         }  else if(res.status===401){
             alert("Unauthorized");
-            location.replace("../../login.html");
+            location.replace("../login.html");
         }
         else{
             alert("something went wrong");

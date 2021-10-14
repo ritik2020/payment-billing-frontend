@@ -22,7 +22,7 @@ async function addPaymentDetails(rollNo) {
         }
         else if(res.status===401){
             alert("Unauthorized");
-            location.replace("../../login.html");
+            location.replace("../login.html");
         }
         else{
             alert("something went wrong");

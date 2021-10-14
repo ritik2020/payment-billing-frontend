@@ -13,7 +13,7 @@ async function getAccountantById(id){
     }
     else if(res.status===401){
         alert("Unauthorized");
-        location.replace("../../login.html");
+        location.replace("../login.html");
     }
     else{
         alert("something went wrong");
@@ -47,7 +47,7 @@ async function hitEditAccountantRequest(accountant){
         }
         else if(res.status===401){
             alert("Unauthorized");
-            location.replace("../../login.html");
+            location.replace("../login.html");
         }
         else{
             alert("something went wrong");

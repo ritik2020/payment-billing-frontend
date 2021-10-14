@@ -31,7 +31,7 @@ async function hitAddAccountantRequest(accountant, branchId){
         }
         else if(res.status===401){
             alert("unauthorized");
-            location.replace("../../login.html")
+            location.replace("../login.html")
         }else{
             alert("something went wrong");
         }

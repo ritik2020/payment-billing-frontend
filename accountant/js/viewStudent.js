@@ -12,7 +12,7 @@ async function getStudentByRollNo(rollNo){
     }
     else if(res.status===401){
         alert("Unauthorized");
-        location.replace("../../login.html");
+        location.replace("../login.html");
     }
     else{
         alert("something went wrong");
@@ -31,7 +31,7 @@ async function getEnrolledCourse(rollNo){
     }
     else if(res.status===401){
         alert("Unauthorized");
-        location.replace("../../login.html");
+        location.replace("../login.html");
     }
     else{
         alert("something went wrong");
@@ -50,7 +50,7 @@ async function getFeeDue(rollNo){
     }
     else if(res.status===401){
         alert("Unauthorized");
-        location.replace("../../login.html");
+        location.replace("../login.html");
     }
     else{
         alert("something went wrong");
@@ -121,7 +121,7 @@ async function deletePaymentDetail(id){
         }
         else if(res.status===401){
             alert("Unauthorized");
-            location.replace("../../login.html");
+            location.replace("../login.html");
         }
         else{
             alert("something went wrong");
